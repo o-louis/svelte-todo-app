@@ -11,6 +11,6 @@
   ul {
     list-style-type: none;
     padding-left: 0;
-    margin: 30px 0;
+    margin: 10px 0 30px;
   }
 </style>

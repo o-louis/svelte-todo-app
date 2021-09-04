@@ -7,6 +7,8 @@
 	let error = false;
 	let task = { id: -1, name: '', completed: false }
 
+	$: tasksRemaining = tasks.filter(task => !task.completed).length;
+
 	const addTask = () => {
 		error = !isDataValid(task)
 		if (!error) {
@@ -26,6 +28,11 @@
 		tasks = tasks.filter(task => task.id !== event.detail.id);
 	}
 
+	const toggleCompleted = (event) => {
+		const index = tasks.findIndex(task => task.id === event.detail.id);
+		tasks[index].completed = !tasks[index].completed;
+	}
+
 	const isDataValid = ({ name }) => {
 		return name.trim() && name !== '';
 	}
@@ -33,10 +40,11 @@
 
 <main>
 	<h1>Svelte Todo App</h1>
+	<p>{tasksRemaining} items left</p>
 
 	<TaskList class="list">
 		{#each tasks as task (task)}
-			<Task {...task} on:delete={deleteTask} />
+			<Task {...task} on:delete={deleteTask} on:toggle={toggleCompleted} />
 		{/each}
 	</TaskList>
 
@@ -53,6 +61,9 @@
 		text-align: center;
 		padding: 1rem 1.5rem;
 		border-bottom: 2px solid white;
+	}
+	p {
+		padding: 1rem 0;
 	}
 	main {
 		display: flex;

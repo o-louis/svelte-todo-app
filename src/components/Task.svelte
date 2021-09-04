@@ -10,13 +10,19 @@
   function deleteTask() {
     dispatch('delete', { id });
   }
+
+  function toggleCompleted() {
+    dispatch('toggle', { id });
+  }
 </script>
 
 <li class:completed={completed}>
   <label>
-    <input type=checkbox bind:checked={completed}>{name}
+    <input type=checkbox bind:checked={completed} on:change={toggleCompleted}>{name}
   </label>
-  <button class="delete" on:click={deleteTask}><img src="https://s2.svgbox.net/hero-outline.svg?ic=trash&color=fff" width="28" height="28" alt="delete button"></button>
+  <button class="delete" on:click={deleteTask}>
+    <img src="https://s2.svgbox.net/hero-outline.svg?ic=trash&color=fff" width="28" height="28" alt="delete button">
+  </button>
 </li>
 
 <style>
